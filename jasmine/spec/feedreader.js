@@ -35,7 +35,7 @@ $(function() {
             for (i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
                 expect(allFeeds[i].url).not.toBe(null);
-                expect(allFeeds[i].url).not.toBe(undefined);
+                expect(allFeeds[i].url).not.toEqual("");
             }
         });
 
@@ -47,7 +47,7 @@ $(function() {
             for (i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].name).toBeDefined();
                 expect(allFeeds[i].name).not.toBe(null);
-                expect(allFeeds[i].name).not.toBe(undefined);
+                expect(allFeeds[i].name).not.toEqual("");
             }
         });
     });
@@ -130,8 +130,11 @@ $(function() {
     describe('Initial Entries', function() {
         var testContainer;
         beforeEach(function(done) {
+            // Load first feed
             loadFeed(0, function() {
-                testContainer = $('.feed');
+                // Get the entries in the feed, get length of entries
+                testContainer = $('.feed .entry').length;
+                //console.log(testContainer.length);
                 done();
             });
         });
@@ -142,9 +145,8 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-        it('have at least one entry in feed container', function(done) {
-            expect(testContainer[0]).not.toBe(null);
-            done();
+        it('have at least one entry in feed container', function() {
+            expect(testContainer).toBeGreaterThan(0);
         });
     });
 
